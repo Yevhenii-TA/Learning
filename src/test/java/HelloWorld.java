@@ -12,7 +12,7 @@ public class HelloWorld {
         driver.get("https://selenium.dev");
         WebElement SupportButton =  driver.findElement(By.xpath("//*[@id='main_navbar']/ul/li[6]/a"));
         SupportButton.click();
-        Thread.sleep(5000); //do not use this approach
+        Thread.sleep(3000); //do not use this approach
         driver.quit();
     }
 
