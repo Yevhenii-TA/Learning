@@ -27,7 +27,7 @@ public class TestNGTest {
         WebElement SupportTitle = driver.findElement(By.xpath("//h1[text()='Getting Help']"));
         Assert.assertEquals(SupportTitle.getText(),"Getting Help");
 //      Thread.sleep(3000); //do not use this approach
-        driver.quit();
+//      driver.quit();
     }
 
     @AfterMethod (alwaysRun = true)
