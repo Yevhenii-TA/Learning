@@ -16,16 +16,4 @@ public class SeleniumSupportPage {
         WebElement supportBtn = driver.findElement(By.xpath("//a[@href='/support']"));
         supportBtn.click();
     }
-
-
-/*    public SeleniumSupportPage openSupportPage()
-    {
-        supportButton.click();
-    }*/
-
-/*    public String getTitleText(String titleActual)
-    {
-        return titleActual;
-    }*/
-
 }
