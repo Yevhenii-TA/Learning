@@ -19,7 +19,6 @@ public class TestNGTest {
     }
     @Test (description = "elementary test, CTRA-7465")
     public void BtnClick()  {
-
         driver.get("https://selenium.dev");
         WebElement SupportButton =  driver.findElement(By.xpath("//*[@id='main_navbar']/ul/li[6]/a"));
         SupportButton.click();
