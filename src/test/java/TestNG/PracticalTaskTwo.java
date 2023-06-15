@@ -5,9 +5,9 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pageobject_model.PractTaskOnePOM;
+import pageobject_model.PractTaskTwoPOM;
 
-public class PracticalTaskOne {
+public class PracticalTaskTwo {
     private WebDriver driver;
 
     @BeforeMethod(alwaysRun = true)
@@ -18,8 +18,8 @@ public class PracticalTaskOne {
 
     @Test
     public void TaskOne() throws InterruptedException {
-        PractTaskOnePOM practTaskOnePOM = new PractTaskOnePOM(driver);
-        practTaskOnePOM.openHomePage()
+        PractTaskTwoPOM practTaskTwoPOM = new PractTaskTwoPOM(driver);
+        practTaskTwoPOM.openHomePage()
                 .pasteMainText()
                 .pasteNameTitle()
                 .selectExpValue()
