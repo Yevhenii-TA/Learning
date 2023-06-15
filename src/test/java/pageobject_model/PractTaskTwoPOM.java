@@ -9,6 +9,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
+import static org.openqa.selenium.support.ui.ExpectedConditions.numberOfWindowsToBe;
+
 public class PractTaskTwoPOM {
     private WebDriver driver;
     private static final String HOMEPAGE_URL = "https://pastebin.com";
@@ -52,6 +54,8 @@ public class PractTaskTwoPOM {
     private WebElement passField;
     @FindBy(xpath = "//button[@type='submit'][text()='Login']")
     private WebElement signInBtn;
+    @FindBy(xpath = "//a[text()='raw']")
+    private WebElement rawBtn;
 
     //endregion
     public PractTaskTwoPOM(WebDriver driver) {
@@ -101,14 +105,28 @@ public class PractTaskTwoPOM {
 
     public PractTaskTwoPOM loginToSite() throws InterruptedException {
         loginBtn.click();
-
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
         wait.until(ExpectedConditions.visibilityOf(signInBtn));
-
         usernameField.sendKeys(USERNAME);
         passField.sendKeys(PASSWORD);
         signInBtn.click();
+        return this;
+    }
 
+    public PractTaskTwoPOM switchToNewTab(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(4));
+
+        String originalWindow = driver.getWindowHandle();
+        assert driver.getWindowHandles().size() == 1;
+        rawBtn.click();
+        wait.until(numberOfWindowsToBe(2));
+
+        for (String windowHandle : driver.getWindowHandles()) {
+            if(!originalWindow.contentEquals(windowHandle)) {
+                driver.switchTo().window(windowHandle);
+                break;
+            }
+        }
         return this;
     }
 }
