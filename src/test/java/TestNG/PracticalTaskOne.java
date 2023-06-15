@@ -22,8 +22,8 @@ public class PracticalTaskOne {
         practTaskOnePOM.openHomePage()
                 .pasteMainText()
                 .pasteNameTitle()
-                .selectExpValue();
-                //.tapOnCreateBtn();
+                .selectExpValue()
+                .tapOnCreateBtn();
 
         Thread.sleep(5000);
     }
