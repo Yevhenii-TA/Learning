@@ -18,8 +18,8 @@ public class PracticalTaskOne {
 
     @Test
     public void TaskOne() throws InterruptedException {
-        PractTaskOnePOM practTaskOnePOM = new PractTaskOnePOM(driver);
-        practTaskOnePOM.openHomePage()
+        PractTaskOnePOM practTaskPOM = new PractTaskOnePOM(driver);
+        practTaskPOM.openHomePage()
                 .pasteMainText()
                 .pasteNameTitle()
                 .selectExpValue()

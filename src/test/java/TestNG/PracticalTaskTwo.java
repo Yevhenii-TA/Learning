@@ -17,13 +17,15 @@ public class PracticalTaskTwo {
     }
 
     @Test
-    public void TaskOne() throws InterruptedException {
-        PractTaskTwoPOM practTaskTwoPOM = new PractTaskTwoPOM(driver);
-        practTaskTwoPOM.openHomePage()
+    public void TaskTwo() throws InterruptedException {
+        PractTaskTwoPOM practTaskPOM = new PractTaskTwoPOM(driver);
+        practTaskPOM.openHomePage()
                 .pasteMainText()
+                .turnOnToggle()
                 .pasteNameTitle()
-                .selectExpValue()
+                .selectDropdownValues()
                 .tapOnCreateBtn();
+        Thread.sleep(5000);
 
     }
 

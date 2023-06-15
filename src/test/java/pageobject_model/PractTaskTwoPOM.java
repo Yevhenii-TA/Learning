@@ -16,7 +16,7 @@ public class PractTaskTwoPOM {
     private static final String TEXT_NEW_PASTE = "git config --global user.name  \"New Sheriff in Town\"\n" +
             "git reset $(git commit-tree HEAD^{tree} -m \"Legacy code\")\n" +
             "git push origin master --force";
-    private static final String TEXT_NAME_TITLE = "helloweb";
+    private static final String TEXT_NAME_TITLE = "how to gain dominance among developers";
 
     //region Selectors
     @FindBy(xpath = "//textarea[@id='postform-text']")
@@ -27,6 +27,8 @@ public class PractTaskTwoPOM {
 
     @FindBy(xpath = "//span[@title='Never']")
     private WebElement expirationDropdownHP;
+    @FindBy(id = "select2-postform-format-container")
+    private WebElement formatDropdownHP;
 
     @FindBy(xpath = "//input[@id='postform-name']")
     private WebElement nameFieldHP;
@@ -35,47 +37,60 @@ public class PractTaskTwoPOM {
     private WebElement createBtn;
 
     @FindBy(xpath = "//li[text() = '10 Minutes']")
-    private WebElement selectOption;
+    private WebElement selectOptionExpiration;
+    @FindBy(xpath = "//li[text() = 'Bash']")
+    private WebElement selectOptionFormat;
+
+    @FindBy(xpath = "//div[@class='toggle__control']")
+    private WebElement formatToggle;
 
     //endregion
-    public PractTaskTwoPOM(WebDriver driver){
+    public PractTaskTwoPOM(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
 
-    public PractTaskTwoPOM openHomePage(){
+    public PractTaskTwoPOM openHomePage() {
         driver.get(HOMEPAGE_URL);
         //return new PractTaskOnePOM(driver);
         return this;
     }
 
-    public PractTaskTwoPOM pasteMainText(){
+    public PractTaskTwoPOM pasteMainText() {
         inputFieldHP.sendKeys(TEXT_NEW_PASTE);
         //return new PractTaskOnePOM(driver);
         return this;
     }
 
-    public PractTaskTwoPOM pasteNameTitle(){
+    public PractTaskTwoPOM pasteNameTitle() {
         nameFieldHP.sendKeys(TEXT_NAME_TITLE);
         //return new PractTaskOnePOM(driver);
         return this;
     }
 
-    public PractTaskTwoPOM selectExpValue() throws InterruptedException {
+    public PractTaskTwoPOM selectDropdownValues() throws InterruptedException {
         expirationDropdownHP.click();
-        selectOption.click();
+        selectOptionExpiration.click();
+        formatDropdownHP.click();
+        selectOptionFormat.click();
+
         return this;
     }
 
-    public PractTaskTwoPOM waitElement(String element){
+    public PractTaskTwoPOM waitElement(String element) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(4));
         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(element)));
         return this;
     }
 
-    public PractTaskTwoPOM tapOnCreateBtn(){
+    public PractTaskTwoPOM tapOnCreateBtn() {
         createBtn.click();
         //return new PractTaskOnePOM(driver);
+        return this;
+    }
+
+    public PractTaskTwoPOM turnOnToggle(){
+        formatToggle.click();
         return this;
     }
 }
