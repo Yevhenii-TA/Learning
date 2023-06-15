@@ -4,6 +4,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class PractTaskTwoPOM {
     private WebDriver driver;
@@ -12,6 +16,8 @@ public class PractTaskTwoPOM {
             "git reset $(git commit-tree HEAD^{tree} -m \"Legacy code\")\n" +
             "git push origin master --force";
     private static final String TEXT_NAME_TITLE = "how to gain dominance among developers";
+    private static final String USERNAME = "ivanenko1992";
+    private static final String PASSWORD = "Xthysdes1993?1234";
 
     //region Selectors
     @FindBy(xpath = "//textarea[@id='postform-text']")
@@ -38,6 +44,14 @@ public class PractTaskTwoPOM {
 
     @FindBy(xpath = "//div[@class='toggle__control']")
     private WebElement formatToggle;
+    @FindBy(xpath = "//*[@class='btn-sign sign-in']")
+    private WebElement loginBtn;
+    @FindBy(xpath = "//input[@id='loginform-username']")
+    private WebElement usernameField;
+    @FindBy(xpath = "//input[@id='loginform-password']")
+    private WebElement passField;
+    @FindBy(xpath = "//button[@type='submit'][text()='Login']")
+    private WebElement signInBtn;
 
     //endregion
     public PractTaskTwoPOM(WebDriver driver) {
@@ -47,6 +61,8 @@ public class PractTaskTwoPOM {
 
     public PractTaskTwoPOM openHomePage() {
         driver.get(HOMEPAGE_URL);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+        wait.until(ExpectedConditions.visibilityOf(loginBtn));
         //return new PractTaskOnePOM(driver);
         return this;
     }
@@ -63,7 +79,7 @@ public class PractTaskTwoPOM {
         return this;
     }
 
-    public PractTaskTwoPOM selectDropdownValues() throws InterruptedException {
+    public PractTaskTwoPOM selectDropdownValues() {
         expirationDropdownHP.click();
         selectOptionExpiration.click();
         formatDropdownHP.click();
@@ -78,8 +94,21 @@ public class PractTaskTwoPOM {
         return this;
     }
 
-    public PractTaskTwoPOM turnOnToggle(){
+    public PractTaskTwoPOM turnOnToggle() {
         formatToggle.click();
+        return this;
+    }
+
+    public PractTaskTwoPOM loginToSite() throws InterruptedException {
+        loginBtn.click();
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+        wait.until(ExpectedConditions.visibilityOf(signInBtn));
+
+        usernameField.sendKeys(USERNAME);
+        passField.sendKeys(PASSWORD);
+        signInBtn.click();
+
         return this;
     }
 }
