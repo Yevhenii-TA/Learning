@@ -29,7 +29,7 @@ public class PracticalTaskTwo {
     public void TaskTwo() throws InterruptedException {
         String titleResultExpected = "how to gain dominance among developers"; //bad idea, need to find something else
         String formatTypeExpected = "Bash";
-        String colorExpected = "#c20cb9";
+        String colorExpected = "rgba(194, 12, 185, 1)";
         String rawTextToCheck = "git config --global user.name  \"New Sheriff in Town\"\n" +
                 "git reset $(git commit-tree HEAD^{tree} -m \"Legacy code\")\n" +
                 "git push origin master --force";
@@ -48,17 +48,17 @@ public class PracticalTaskTwo {
 
         WebElement titleResultActual = driver.findElement(By.xpath("//div[@class='info-top']/*"));
         WebElement formatTypeActual = driver.findElement(By.xpath("//div[@class='left']/*[@href='/archive/bash']"));
+        Thread.sleep(7000);
         WebElement colorActual = driver.findElement(By.xpath("//*[text()='git config']"));
+
 
         Assert.assertEquals(titleResultActual.getText(), titleResultExpected, "Title does not match expected");
         Assert.assertEquals(formatTypeActual.getText(), formatTypeExpected, "Format type is not correct");
-        Assert.assertEquals(colorExpected, colorActual.getCssValue("color"), "Colors are not identical");
+        Assert.assertEquals(colorActual.getCssValue("color"), colorExpected, "Colors are not identical");
 
-        practTaskPOM.switchToNewTab();
-        Thread.sleep(7000);
+        practTaskPOM.extractRawText();
         WebElement rawTextToCopy = driver.findElement(By.xpath("/html/body/pre/text()"));
         Assert.assertEquals(rawTextToCopy.getText(), rawTextToCheck);
-        driver.close();
 
         Thread.sleep(7000);
     }
