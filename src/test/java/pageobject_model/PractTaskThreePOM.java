@@ -1,9 +1,6 @@
 package pageobject_model;
 
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -15,7 +12,6 @@ public class PractTaskThreePOM {
     private final WebDriver driver;
     private static final String HOMEPAGE_URL = "https://cloud.google.com/";
     private static final String CALC_NAME = "Google Cloud Platform Pricing Calculator";
-    private static final String TEXT_NAME_TITLE = "how to gain dominance among developers";
 
 
     //region Selectors
@@ -43,20 +39,19 @@ public class PractTaskThreePOM {
     private WebElement typeGPUSelect;
     @FindBy(xpath = "//*[@id='select_value_label_483']/span[1]/div")
     private WebElement numberOfGPU;
-    @FindBy(xpath = "//*[@id='select_option_632']") //*[@id="select_option_494"]    //*[@id="select_option_494"]/div
+    @FindBy(xpath = "//*[@id='select_option_494']") //*[@id="select_option_494"]    //*[@id="select_option_494"]/div
     private WebElement numberOfGPUSelect;
     @FindBy(xpath = "//*[@id='select_value_label_446']")
     private WebElement localSSD;
     @FindBy(xpath = "//*[@id='select_option_473']")
     private WebElement localSSDSelect;
-    @FindBy(xpath = "//*[@id='select_value_label_94']")
+    @FindBy(css = "#select_value_label_94")
     private WebElement dataCenter;
-    @FindBy(xpath = "//*[@id='select_option_255']")
-    //changed data center because the asked one is not supported with selected GPU
+    @FindBy(css = "#select_option_232") //changed data center because the asked one is not supported with selected GPU
     private WebElement dataCenterSelect;
-    @FindBy(xpath = "//*[@id='select_value_label_95']")
+    @FindBy(css = "#select_value_label_95")
     private WebElement commitedUsage;
-    @FindBy(xpath = "//*[@id='select_option_134']")
+    @FindBy(css = "#select_option_134")
     private WebElement commitedUsageSelect;
     @FindBy(xpath = "//*[@id='mainForm']/div[2]/div/md-card/md-card-content/div/div[1]/form/div[19]/button")
     private WebElement addToEstimate;
@@ -73,14 +68,13 @@ public class PractTaskThreePOM {
 
     public PractTaskThreePOM openHomePage() {
         driver.get(HOMEPAGE_URL);
-        //driver.get("https://cloud.google.com/products/calculator");
         return this;
     }
 
     public PractTaskThreePOM searchCalcAndNavigate() {
         searchBtnField.sendKeys(CALC_NAME);
         searchBtnField.sendKeys(Keys.ENTER);
-        waitHandler(5, calculatorLink);
+        waitHandlerVisibility(5, calculatorLink);
         calculatorLink.click();
         return this;
     }
@@ -89,36 +83,49 @@ public class PractTaskThreePOM {
         switchToFrame(); //switch to iframes
         numberOfInstances.sendKeys("4");
         machineSeries.click();
-        waitHandler(1, machineSeriesOption);
+        waitHandlerVisibility(1, machineSeriesOption);
         machineSeriesOption.click();
         return this;
     }
 
-    public PractTaskThreePOM fillInGPUdata(){
+    public PractTaskThreePOM fillInGPUdata() {
         checkboxGPU.click();
         typeGPU.click();
-        waitHandler(2, typeGPUSelect);
+        waitHandlerVisibility(2, typeGPUSelect);
         typeGPUSelect.click();
         numberOfGPU.click();
-        waitHandler(2, numberOfGPUSelect);
+        waitHandlerVisibility(2, numberOfGPUSelect);
         numberOfGPUSelect.click();
         return this;
     }
 
-    public PractTaskThreePOM fillInStorageData(){
+    public PractTaskThreePOM fillInStorageData() throws InterruptedException {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+
         localSSD.click();
+        waitHandlerVisibility(2, localSSDSelect);
         localSSDSelect.click();
-        dataCenter.click();
-        dataCenterSelect.click();
-        commitedUsage.click();
-        commitedUsageSelect.click();
+
+        WebElement point = driver.findElement(By.xpath("//*[@id='mainForm']/div[2]/div/md-card/md-card-content/div/div[1]/form/div[17]/div[1]"));
+        js.executeScript("arguments[0].scrollIntoView();", point);
+        js.executeScript("arguments[0].click();",dataCenter);
+        js.executeScript("arguments[0].click();",dataCenterSelect);
+        js.executeScript("arguments[0].click();",commitedUsage);
+        waitHandlerClickable(3,commitedUsageSelect);
+        js.executeScript("arguments[0].click();",commitedUsageSelect);
+
         return this;
     }
 
-    public PractTaskThreePOM waitHandler(long secDuration, WebElement element) {
+    public PractTaskThreePOM waitHandlerVisibility(long secDuration, WebElement element) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(secDuration));
         wait.until(ExpectedConditions.visibilityOf(element));
+        return this;
+    }
 
+    public PractTaskThreePOM waitHandlerClickable(long secDuration, WebElement element) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(secDuration));
+        wait.until(ExpectedConditions.elementToBeClickable(element));
         return this;
     }
 
@@ -128,14 +135,10 @@ public class PractTaskThreePOM {
         return this;
     }
 
-    public PractTaskThreePOM moveToElement(WebElement element) {
-        Actions action = new Actions(driver);
-        action.moveToElement(element).perform();
-        return this;
-    }
-
     public PractTaskThreePOM submitForm() {
-        addToEstimate.click();
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].click();",addToEstimate);
+        //addToEstimate.click();
         return this;
     }
 }
