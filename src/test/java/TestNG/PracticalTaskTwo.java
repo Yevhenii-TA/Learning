@@ -51,7 +51,6 @@ public class PracticalTaskTwo {
         Thread.sleep(7000);
         WebElement colorActual = driver.findElement(By.xpath("//*[text()='git config']"));
 
-
         Assert.assertEquals(titleResultActual.getText(), titleResultExpected, "Title does not match expected");
         Assert.assertEquals(formatTypeActual.getText(), formatTypeExpected, "Format type is not correct");
         Assert.assertEquals(colorActual.getCssValue("color"), colorExpected, "Colors are not identical");
@@ -59,8 +58,6 @@ public class PracticalTaskTwo {
         practTaskPOM.extractRawText();
         WebElement rawTextToCopy = driver.findElement(By.xpath("/html/body/pre/text()"));
         Assert.assertEquals(rawTextToCopy.getText(), rawTextToCheck);
-
-        Thread.sleep(7000);
     }
 
     @AfterMethod(alwaysRun = true)
