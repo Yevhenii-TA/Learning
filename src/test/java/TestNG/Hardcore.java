@@ -10,9 +10,9 @@ import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pageobject_model.PractTaskFourPOM;
+import pageobject_model.HardcorePOM;
 
-public class PracticalTaskFour {
+public class Hardcore {
     private WebDriver driver;
 
     @BeforeMethod(alwaysRun = true)
@@ -31,7 +31,7 @@ public class PracticalTaskFour {
         String expectedInstance = "Instance type: n1-standard-1";
         String expectedRegion = "Region: Columbus";
 
-        PractTaskFourPOM practTaskPOM = new PractTaskFourPOM(driver);
+        HardcorePOM practTaskPOM = new HardcorePOM(driver);
         practTaskPOM.openHomePage()
                 .searchCalcAndNavigate()
                 .fillInMainData()

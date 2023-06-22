@@ -5,9 +5,9 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pageobject_model.PractTaskOnePOM;
+import pageobject_model.iCanWinPOM;
 
-public class PracticalTaskOne {
+public class iCanWin {
     private WebDriver driver;
 
     @BeforeMethod(alwaysRun = true)
@@ -18,7 +18,7 @@ public class PracticalTaskOne {
 
     @Test
     public void TaskOne() throws InterruptedException {
-        PractTaskOnePOM practTaskPOM = new PractTaskOnePOM(driver);
+        iCanWinPOM practTaskPOM = new iCanWinPOM(driver);
         practTaskPOM.openHomePage()
                 .pasteMainText()
                 .pasteNameTitle()

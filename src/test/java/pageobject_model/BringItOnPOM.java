@@ -9,7 +9,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-public class PractTaskTwoPOM {
+public class BringItOnPOM {
     private WebDriver driver;
     private static final String HOMEPAGE_URL = "https://pastebin.com";
     private static final String TEXT_NEW_PASTE = "git config --global user.name  \"New Sheriff in Town\"\n" +
@@ -56,12 +56,12 @@ public class PractTaskTwoPOM {
     private WebElement rawBtn;
 
     //endregion
-    public PractTaskTwoPOM(WebDriver driver) {
+    public BringItOnPOM(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
 
-    public PractTaskTwoPOM openHomePage() {
+    public BringItOnPOM openHomePage() {
         driver.get(HOMEPAGE_URL);
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
         wait.until(ExpectedConditions.visibilityOf(loginBtn));
@@ -69,19 +69,19 @@ public class PractTaskTwoPOM {
         return this;
     }
 
-    public PractTaskTwoPOM pasteMainText() {
+    public BringItOnPOM pasteMainText() {
         inputFieldHP.sendKeys(TEXT_NEW_PASTE);
         //return new PractTaskOnePOM(driver);
         return this;
     }
 
-    public PractTaskTwoPOM pasteNameTitle() {
+    public BringItOnPOM pasteNameTitle() {
         nameFieldHP.sendKeys(TEXT_NAME_TITLE);
         //return new PractTaskOnePOM(driver);
         return this;
     }
 
-    public PractTaskTwoPOM selectDropdownValues() {
+    public BringItOnPOM selectDropdownValues() {
         expirationDropdownHP.click();
         selectOptionExpiration.click();
         formatDropdownHP.click();
@@ -90,18 +90,18 @@ public class PractTaskTwoPOM {
         return this;
     }
 
-    public PractTaskTwoPOM tapOnCreateBtn() {
+    public BringItOnPOM tapOnCreateBtn() {
         createBtn.click();
         //return new PractTaskOnePOM(driver);
         return this;
     }
 
-    public PractTaskTwoPOM turnOnToggle() {
+    public BringItOnPOM turnOnToggle() {
         formatToggle.click();
         return this;
     }
 
-    public PractTaskTwoPOM loginToSite() throws InterruptedException {
+    public BringItOnPOM loginToSite() throws InterruptedException {
         loginBtn.click();
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
         wait.until(ExpectedConditions.visibilityOf(signInBtn));
@@ -111,7 +111,7 @@ public class PractTaskTwoPOM {
         return this;
     }
 
-    public PractTaskTwoPOM extractRawText(){
+    public BringItOnPOM extractRawText(){
         rawBtn.click();
 
         return this;

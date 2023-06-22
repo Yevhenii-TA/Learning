@@ -10,9 +10,9 @@ import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pageobject_model.PractTaskThreePOM;
+import pageobject_model.HurtMePlentyPOM;
 
-public class PracticalTaskThree {
+public class HurtMePlenty {
     private WebDriver driver;
 
     @BeforeMethod(alwaysRun = true)
@@ -25,13 +25,13 @@ public class PracticalTaskThree {
 
     @Test
     public void TaskThree() throws InterruptedException {
-        String epectedPrice = "Total Estimated Cost: USD 4,799.62 per 1 month";
+        String expectedPrice = "Total Estimated Cost: USD 4,799.62 per 1 month";
         String expectedSSD = "Local SSD: 2x375 GiB";
         String expectedVM = "Provisioning model: Regular";
         String expectedInstance = "Instance type: n1-standard-1";
         String expectedRegion = "Region: Columbus";
 
-        PractTaskThreePOM practTaskPOM = new PractTaskThreePOM(driver);
+        HurtMePlentyPOM practTaskPOM = new HurtMePlentyPOM(driver);
         practTaskPOM.openHomePage()
                 .searchCalcAndNavigate()
                 .fillInMainData()
@@ -45,7 +45,7 @@ public class PracticalTaskThree {
         WebElement actualInstance = driver.findElement(By.xpath("//*[@id='compute']/md-list/md-list-item[5]/div[1]"));
         WebElement actualRegion = driver.findElement(By.xpath("//*[@id='compute']/md-list/md-list-item[1]/div[1]"));
 
-        Assert.assertEquals(actualPrice.getText(), epectedPrice);
+        Assert.assertEquals(actualPrice.getText(), expectedPrice);
         if (actualSSD.getText().contains(expectedSSD)){
             Assert.assertTrue(true,"String is not valid");
         }
@@ -53,8 +53,9 @@ public class PracticalTaskThree {
         if (actualInstance.getText().contains(expectedInstance)){
             Assert.assertTrue(true,"String is not valid");
         }
-        Assert.assertEquals(actualRegion.getText(), expectedRegion);
+        Assert.assertEquals(actualRegion.getText(), expectedRegion, "Region is not correct");
     }
+
 
     @AfterMethod(alwaysRun = true)
     public void TearDown() {

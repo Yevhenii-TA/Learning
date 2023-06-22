@@ -10,7 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-public class PractTaskOnePOM {
+public class iCanWinPOM {
     private WebDriver driver;
     private static final String HOMEPAGE_URL = "https://pastebin.com";
     private static final String TEXT_NEW_PASTE = "Hello from WebDriver";
@@ -36,42 +36,42 @@ public class PractTaskOnePOM {
     private WebElement selectOption;
 
     //endregion
-    public PractTaskOnePOM(WebDriver driver){
+    public iCanWinPOM(WebDriver driver){
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
 
-    public PractTaskOnePOM openHomePage(){
+    public iCanWinPOM openHomePage(){
         driver.get(HOMEPAGE_URL);
         //return new PractTaskOnePOM(driver);
         return this;
     }
 
-    public PractTaskOnePOM pasteMainText(){
+    public iCanWinPOM pasteMainText(){
         inputFieldHP.sendKeys(TEXT_NEW_PASTE);
         //return new PractTaskOnePOM(driver);
         return this;
     }
 
-    public PractTaskOnePOM pasteNameTitle(){
+    public iCanWinPOM pasteNameTitle(){
         nameFieldHP.sendKeys(TEXT_NAME_TITLE);
         //return new PractTaskOnePOM(driver);
         return this;
     }
 
-    public PractTaskOnePOM selectExpValue() throws InterruptedException {
+    public iCanWinPOM selectExpValue() throws InterruptedException {
         expirationDropdownHP.click();
         selectOption.click();
         return this;
     }
 
-    public PractTaskOnePOM waitElement(String element){
+    public iCanWinPOM waitElement(String element){
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(4));
         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(element)));
         return this;
     }
 
-    public PractTaskOnePOM tapOnCreateBtn(){
+    public iCanWinPOM tapOnCreateBtn(){
         createBtn.click();
         //return new PractTaskOnePOM(driver);
         return this;

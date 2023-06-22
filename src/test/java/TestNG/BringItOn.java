@@ -10,11 +10,11 @@ import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pageobject_model.PractTaskTwoPOM;
+import pageobject_model.BringItOnPOM;
 
 import java.time.Duration;
 
-public class PracticalTaskTwo {
+public class BringItOn {
     private WebDriver driver;
 
     @BeforeMethod(alwaysRun = true)
@@ -34,7 +34,7 @@ public class PracticalTaskTwo {
                 "git reset $(git commit-tree HEAD^{tree} -m \"Legacy code\")\n" +
                 "git push origin master --force";
 
-        PractTaskTwoPOM practTaskPOM = new PractTaskTwoPOM(driver);
+        BringItOnPOM practTaskPOM = new BringItOnPOM(driver);
         practTaskPOM.openHomePage()
                 //.loginToSite()
                 .pasteMainText()

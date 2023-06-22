@@ -8,7 +8,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-public class PractTaskThreePOM {
+public class HardcorePOM {
     private final WebDriver driver;
     private static final String HOMEPAGE_URL = "https://cloud.google.com/";
     private static final String CALC_NAME = "Google Cloud Platform Pricing Calculator";
@@ -59,19 +59,25 @@ public class PractTaskThreePOM {
     private WebElement calculatorFrameOne;
     @FindBy(xpath = "//iframe[@id='myFrame']")
     private WebElement calculatorFrameTwo;
+    @FindBy(xpath = "//*[@id='Email Estimate']")
+    private WebElement openEmailForm;
+    @FindBy(xpath = "//*[@id='input_566']")
+    private WebElement emailField;
+    @FindBy(xpath = "")
+    private WebElement sendEmailBtn;
 
     //endregion
-    public PractTaskThreePOM(WebDriver driver) {
+    public HardcorePOM(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
 
-    public PractTaskThreePOM openHomePage() {
+    public HardcorePOM openHomePage() {
         driver.get(HOMEPAGE_URL);
         return this;
     }
 
-    public PractTaskThreePOM searchCalcAndNavigate() {
+    public HardcorePOM searchCalcAndNavigate() {
         searchBtnField.sendKeys(CALC_NAME);
         searchBtnField.sendKeys(Keys.ENTER);
         waitHandlerVisibility(5, calculatorLink);
@@ -79,7 +85,7 @@ public class PractTaskThreePOM {
         return this;
     }
 
-    public PractTaskThreePOM fillInMainData() throws InterruptedException {
+    public HardcorePOM fillInMainData() throws InterruptedException {
         switchToFrame(); //switch to iframes
         numberOfInstances.sendKeys("4");
         machineSeries.click();
@@ -88,7 +94,7 @@ public class PractTaskThreePOM {
         return this;
     }
 
-    public PractTaskThreePOM fillInGPUdata() {
+    public HardcorePOM fillInGPUdata() {
         checkboxGPU.click();
         typeGPU.click();
         waitHandlerVisibility(2, typeGPUSelect);
@@ -99,7 +105,7 @@ public class PractTaskThreePOM {
         return this;
     }
 
-    public PractTaskThreePOM fillInStorageData() throws InterruptedException {
+    public HardcorePOM fillInStorageData() throws InterruptedException {
         JavascriptExecutor js = (JavascriptExecutor) driver;
 
         localSSD.click();
@@ -108,37 +114,43 @@ public class PractTaskThreePOM {
 
         WebElement point = driver.findElement(By.xpath("//*[@id='mainForm']/div[2]/div/md-card/md-card-content/div/div[1]/form/div[17]/div[1]"));
         js.executeScript("arguments[0].scrollIntoView();", point);
-        js.executeScript("arguments[0].click();",dataCenter);
-        js.executeScript("arguments[0].click();",dataCenterSelect);
-        js.executeScript("arguments[0].click();",commitedUsage);
-        waitHandlerClickable(3,commitedUsageSelect);
-        js.executeScript("arguments[0].click();",commitedUsageSelect);
+        js.executeScript("arguments[0].click();", dataCenter);
+        js.executeScript("arguments[0].click();", dataCenterSelect);
+        js.executeScript("arguments[0].click();", commitedUsage);
+        waitHandlerClickable(3, commitedUsageSelect);
+        js.executeScript("arguments[0].click();", commitedUsageSelect);
 
         return this;
     }
 
-    public PractTaskThreePOM waitHandlerVisibility(long secDuration, WebElement element) {
+    public HardcorePOM waitHandlerVisibility(long secDuration, WebElement element) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(secDuration));
         wait.until(ExpectedConditions.visibilityOf(element));
         return this;
     }
 
-    public PractTaskThreePOM waitHandlerClickable(long secDuration, WebElement element) {
+    public HardcorePOM waitHandlerClickable(long secDuration, WebElement element) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(secDuration));
         wait.until(ExpectedConditions.elementToBeClickable(element));
         return this;
     }
 
-    public PractTaskThreePOM switchToFrame() {
+    public HardcorePOM switchToFrame() {
         driver.switchTo().frame(calculatorFrameOne);
         driver.switchTo().frame(calculatorFrameTwo);
         return this;
     }
 
-    public PractTaskThreePOM submitForm() {
+    public HardcorePOM submitForm() {
         JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].click();",addToEstimate);
-        //addToEstimate.click();
+        js.executeScript("arguments[0].click();", addToEstimate);
+        return this;
+    }
+
+    public HardcorePOM sendByEmail() {
+
+        openEmailForm.click();
+        emailField.sendKeys();
         return this;
     }
 }
