@@ -31,8 +31,8 @@ public class HurtMePlenty {
         String expectedInstance = "Instance type: n1-standard-1";
         String expectedRegion = "Region: Columbus";
 
-        HurtMePlentyPOM practTaskPOM = new HurtMePlentyPOM(driver);
-        practTaskPOM.openHomePage()
+        HurtMePlentyPOM taskThree = new HurtMePlentyPOM(driver);
+        taskThree.openHomePage()
                 .searchCalcAndNavigate()
                 .fillInMainData()
                 .fillInGPUdata()

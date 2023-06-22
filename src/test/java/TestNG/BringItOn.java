@@ -34,9 +34,8 @@ public class BringItOn {
                 "git reset $(git commit-tree HEAD^{tree} -m \"Legacy code\")\n" +
                 "git push origin master --force";
 
-        BringItOnPOM practTaskPOM = new BringItOnPOM(driver);
-        practTaskPOM.openHomePage()
-                //.loginToSite()
+        BringItOnPOM taskTwo = new BringItOnPOM(driver);
+        taskTwo.openHomePage()
                 .pasteMainText()
                 .turnOnToggle()
                 .pasteNameTitle()
@@ -55,7 +54,7 @@ public class BringItOn {
         Assert.assertEquals(formatTypeActual.getText(), formatTypeExpected, "Format type is not correct");
         Assert.assertEquals(colorActual.getCssValue("color"), colorExpected, "Colors are not identical");
 
-        practTaskPOM.extractRawText();
+        taskTwo.extractRawText();
         WebElement rawTextToCopy = driver.findElement(By.xpath("/html/body/pre/text()"));
         Assert.assertEquals(rawTextToCopy.getText(), rawTextToCheck);
     }

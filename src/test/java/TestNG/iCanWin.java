@@ -18,8 +18,8 @@ public class iCanWin {
 
     @Test
     public void TaskOne() throws InterruptedException {
-        iCanWinPOM practTaskPOM = new iCanWinPOM(driver);
-        practTaskPOM.openHomePage()
+        iCanWinPOM taskOne = new iCanWinPOM(driver);
+        taskOne.openHomePage()
                 .pasteMainText()
                 .pasteNameTitle()
                 .selectExpValue()

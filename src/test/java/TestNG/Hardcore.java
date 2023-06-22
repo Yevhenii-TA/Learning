@@ -31,8 +31,8 @@ public class Hardcore {
         String expectedInstance = "Instance type: n1-standard-1";
         String expectedRegion = "Region: Columbus";
 
-        HardcorePOM practTaskPOM = new HardcorePOM(driver);
-        practTaskPOM.openHomePage()
+        HardcorePOM taskFour = new HardcorePOM(driver);
+        taskFour.openHomePage()
                 .searchCalcAndNavigate()
                 .fillInMainData()
                 .fillInGPUdata()
