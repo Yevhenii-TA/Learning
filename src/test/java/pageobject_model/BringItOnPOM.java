@@ -92,7 +92,6 @@ public class BringItOnPOM {
 
     public BringItOnPOM tapOnCreateBtn() {
         createBtn.click();
-        //return new PractTaskOnePOM(driver);
         return this;
     }
 
@@ -113,7 +112,6 @@ public class BringItOnPOM {
 
     public BringItOnPOM extractRawText(){
         rawBtn.click();
-
         return this;
     }
 }

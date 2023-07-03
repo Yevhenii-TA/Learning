@@ -26,7 +26,7 @@ public class BringItOn {
     }
 
     @Test
-    public void TaskTwo() throws InterruptedException {
+    public void TaskTwo() {
         String titleResultExpected = "how to gain dominance among developers"; //bad idea, need to find something else
         String formatTypeExpected = "Bash";
         String colorExpected = "rgba(194, 12, 185, 1)";
@@ -47,7 +47,7 @@ public class BringItOn {
 
         WebElement titleResultActual = driver.findElement(By.xpath("//div[@class='info-top']/*"));
         WebElement formatTypeActual = driver.findElement(By.xpath("//div[@class='left']/*[@href='/archive/bash']"));
-        Thread.sleep(7000);
+
         WebElement colorActual = driver.findElement(By.xpath("//*[text()='git config']"));
 
         Assert.assertEquals(titleResultActual.getText(), titleResultExpected, "Title does not match expected");
@@ -55,7 +55,7 @@ public class BringItOn {
         Assert.assertEquals(colorActual.getCssValue("color"), colorExpected, "Colors are not identical");
 
         taskTwo.extractRawText();
-        WebElement rawTextToCopy = driver.findElement(By.xpath("/html/body/pre/text()"));
+        WebElement rawTextToCopy = driver.findElement(By.xpath("/html[1]/body[1]/pre[1]"));
         Assert.assertEquals(rawTextToCopy.getText(), rawTextToCheck);
     }
 

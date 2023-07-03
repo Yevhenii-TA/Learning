@@ -24,7 +24,6 @@ public class iCanWin {
                 .pasteNameTitle()
                 .selectExpValue()
                 .tapOnCreateBtn();
-
     }
 
     @AfterMethod(alwaysRun = true)

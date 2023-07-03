@@ -8,7 +8,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-public class HardcorePOM {
+public class HardCorePOM {
     private final WebDriver driver;
     private static final String HOMEPAGE_URL = "https://cloud.google.com/";
     private static final String CALC_NAME = "Google Cloud Platform Pricing Calculator";
@@ -21,11 +21,11 @@ public class HardcorePOM {
     private WebElement calculatorLink;
     @FindBy(xpath = "//md-tab-item[@tabindex='0']")
     private WebElement computeEngineBtn;
-    @FindBy(xpath = "//*[@id='input_96']")
+    @FindBy(xpath = "//*[@id='input_97']")
     private WebElement numberOfInstances; //#input_96
     @FindBy(xpath = "//*[contains(text(),'E2')]/../../../..//md-select[@placeholder='Series']")
     private WebElement machineSeries;
-    @FindBy(xpath = "//md-option[@id='select_option_212']")
+    @FindBy(xpath = "//md-option[@id='select_option_213']")
     private WebElement machineSeriesOption;
     @FindBy(xpath = "//md-option[@value='CP-COMPUTEENGINE-VMIMAGE-N1-STANDARD-8']")
     private WebElement machineTypeOption;
@@ -33,51 +33,45 @@ public class HardcorePOM {
     @FindBy(xpath = "//*[@id='mainForm']/div[2]/div/md-card/md-card-content/div/div[1]/form/div[12]/div[1]/md-input-container/md-checkbox")
     // ask about this
     private WebElement checkboxGPU;
-    @FindBy(xpath = "//*[@id='select_484']")
+    @FindBy(xpath = "//*[@id='select_485']")
     private WebElement typeGPU;
-    @FindBy(xpath = "//*[@id='select_option_491']")//*[@id="select_option_491"]
+    @FindBy(xpath = "//div[normalize-space()='NVIDIA Tesla V100']")//*[@id="select_option_491"]
     private WebElement typeGPUSelect;
-    @FindBy(xpath = "//*[@id='select_value_label_483']/span[1]/div")
+    @FindBy(xpath = "//*[@id='select_value_label_484']")
     private WebElement numberOfGPU;
-    @FindBy(xpath = "//*[@id='select_option_494']") //*[@id="select_option_494"]    //*[@id="select_option_494"]/div
+    @FindBy(xpath = "//md-option[@id='select_option_495']") //*[@id="select_option_494"]
     private WebElement numberOfGPUSelect;
-    @FindBy(xpath = "//*[@id='select_value_label_446']")
+    @FindBy(xpath = "//*[@id='select_value_label_447']")
     private WebElement localSSD;
-    @FindBy(xpath = "//*[@id='select_option_473']")
+    @FindBy(xpath = "//div[normalize-space()='2x375 GB']")
     private WebElement localSSDSelect;
-    @FindBy(css = "#select_value_label_94")
-    private WebElement dataCenter;
-    @FindBy(css = "#select_option_232") //changed data center because the asked one is not supported with selected GPU
-    private WebElement dataCenterSelect;
     @FindBy(css = "#select_value_label_95")
+    private WebElement dataCenter;
+    @FindBy(css = "#select_option_233") //changed data center because the asked one is not supported with selected GPU
+    private WebElement dataCenterSelect;
+    @FindBy(css = "#select_value_label_142")
     private WebElement commitedUsage;
-    @FindBy(css = "#select_option_134")
+    @FindBy(css = "#select_option_163")
     private WebElement commitedUsageSelect;
-    @FindBy(xpath = "//*[@id='mainForm']/div[2]/div/md-card/md-card-content/div/div[1]/form/div[19]/button")
+    @FindBy(xpath = "//*[@id='mainForm']/div[2]/div/md-card/md-card-content/div/div[1]/form/div[20]/button")
     private WebElement addToEstimate;
     @FindBy(xpath = "//iframe[@src='https://cloud.google.com/frame/products/calculator/index_d6a98ba38837346d20babc06ff2153b68c2990fa24322fe52c5f83ec3a78c6a0.frame']")
     private WebElement calculatorFrameOne;
     @FindBy(xpath = "//iframe[@id='myFrame']")
     private WebElement calculatorFrameTwo;
-    @FindBy(xpath = "//*[@id='Email Estimate']")
-    private WebElement openEmailForm;
-    @FindBy(xpath = "//*[@id='input_566']")
-    private WebElement emailField;
-    @FindBy(xpath = "")
-    private WebElement sendEmailBtn;
 
     //endregion
-    public HardcorePOM(WebDriver driver) {
+    public HardCorePOM(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
 
-    public HardcorePOM openHomePage() {
+    public HardCorePOM openHomePage() {
         driver.get(HOMEPAGE_URL);
         return this;
     }
 
-    public HardcorePOM searchCalcAndNavigate() {
+    public HardCorePOM searchCalcAndNavigate() {
         searchBtnField.sendKeys(CALC_NAME);
         searchBtnField.sendKeys(Keys.ENTER);
         waitHandlerVisibility(5, calculatorLink);
@@ -85,7 +79,7 @@ public class HardcorePOM {
         return this;
     }
 
-    public HardcorePOM fillInMainData() throws InterruptedException {
+    public HardCorePOM fillInMainData() {
         switchToFrame(); //switch to iframes
         numberOfInstances.sendKeys("4");
         machineSeries.click();
@@ -94,7 +88,7 @@ public class HardcorePOM {
         return this;
     }
 
-    public HardcorePOM fillInGPUdata() {
+    public HardCorePOM fillInGPUdata() {
         checkboxGPU.click();
         typeGPU.click();
         waitHandlerVisibility(2, typeGPUSelect);
@@ -105,7 +99,7 @@ public class HardcorePOM {
         return this;
     }
 
-    public HardcorePOM fillInStorageData() throws InterruptedException {
+    public HardCorePOM fillInStorageData() {
         JavascriptExecutor js = (JavascriptExecutor) driver;
 
         localSSD.click();
@@ -114,43 +108,38 @@ public class HardcorePOM {
 
         WebElement point = driver.findElement(By.xpath("//*[@id='mainForm']/div[2]/div/md-card/md-card-content/div/div[1]/form/div[17]/div[1]"));
         js.executeScript("arguments[0].scrollIntoView();", point);
-        js.executeScript("arguments[0].click();", dataCenter);
-        js.executeScript("arguments[0].click();", dataCenterSelect);
-        js.executeScript("arguments[0].click();", commitedUsage);
-        waitHandlerClickable(3, commitedUsageSelect);
-        js.executeScript("arguments[0].click();", commitedUsageSelect);
+        js.executeScript("arguments[0].click();",dataCenter);
+        js.executeScript("arguments[0].click();",dataCenterSelect);
+        js.executeScript("arguments[0].click();",commitedUsage);
+        waitHandlerClickable(3,commitedUsageSelect);
+        js.executeScript("arguments[0].click();",commitedUsageSelect);
 
         return this;
     }
 
-    public HardcorePOM waitHandlerVisibility(long secDuration, WebElement element) {
+    public HardCorePOM waitHandlerVisibility(long secDuration, WebElement element) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(secDuration));
         wait.until(ExpectedConditions.visibilityOf(element));
         return this;
     }
 
-    public HardcorePOM waitHandlerClickable(long secDuration, WebElement element) {
+    public HardCorePOM waitHandlerClickable(long secDuration, WebElement element) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(secDuration));
         wait.until(ExpectedConditions.elementToBeClickable(element));
         return this;
     }
 
-    public HardcorePOM switchToFrame() {
+    public HardCorePOM switchToFrame() {
+        waitHandlerVisibility(10,calculatorFrameOne);
         driver.switchTo().frame(calculatorFrameOne);
         driver.switchTo().frame(calculatorFrameTwo);
         return this;
     }
 
-    public HardcorePOM submitForm() {
+    public HardCorePOM submitForm() {
         JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].click();", addToEstimate);
-        return this;
-    }
-
-    public HardcorePOM sendByEmail() {
-
-        openEmailForm.click();
-        emailField.sendKeys();
+        js.executeScript("arguments[0].click();",addToEstimate);
+        //addToEstimate.click();
         return this;
     }
 }

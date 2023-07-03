@@ -21,11 +21,11 @@ public class HurtMePlentyPOM {
     private WebElement calculatorLink;
     @FindBy(xpath = "//md-tab-item[@tabindex='0']")
     private WebElement computeEngineBtn;
-    @FindBy(xpath = "//*[@id='input_96']")
+    @FindBy(xpath = "//*[@id='input_97']")
     private WebElement numberOfInstances; //#input_96
     @FindBy(xpath = "//*[contains(text(),'E2')]/../../../..//md-select[@placeholder='Series']")
     private WebElement machineSeries;
-    @FindBy(xpath = "//md-option[@id='select_option_212']")
+    @FindBy(xpath = "//md-option[@id='select_option_213']")
     private WebElement machineSeriesOption;
     @FindBy(xpath = "//md-option[@value='CP-COMPUTEENGINE-VMIMAGE-N1-STANDARD-8']")
     private WebElement machineTypeOption;
@@ -33,27 +33,27 @@ public class HurtMePlentyPOM {
     @FindBy(xpath = "//*[@id='mainForm']/div[2]/div/md-card/md-card-content/div/div[1]/form/div[12]/div[1]/md-input-container/md-checkbox")
     // ask about this
     private WebElement checkboxGPU;
-    @FindBy(xpath = "//*[@id='select_484']")
+    @FindBy(xpath = "//*[@id='select_485']")
     private WebElement typeGPU;
-    @FindBy(xpath = "//*[@id='select_option_491']")//*[@id="select_option_491"]
+    @FindBy(xpath = "//div[normalize-space()='NVIDIA Tesla V100']")//*[@id="select_option_491"]
     private WebElement typeGPUSelect;
-    @FindBy(xpath = "//*[@id='select_value_label_483']/span[1]/div")
+    @FindBy(xpath = "//*[@id='select_value_label_484']")
     private WebElement numberOfGPU;
-    @FindBy(xpath = "//*[@id='select_option_494']") //*[@id="select_option_494"]    //*[@id="select_option_494"]/div
+    @FindBy(xpath = "//md-option[@id='select_option_495']") //*[@id="select_option_494"]
     private WebElement numberOfGPUSelect;
-    @FindBy(xpath = "//*[@id='select_value_label_446']")
+    @FindBy(xpath = "//*[@id='select_value_label_447']")
     private WebElement localSSD;
-    @FindBy(xpath = "//*[@id='select_option_473']")
+    @FindBy(xpath = "//div[normalize-space()='2x375 GB']")
     private WebElement localSSDSelect;
-    @FindBy(css = "#select_value_label_94")
-    private WebElement dataCenter;
-    @FindBy(css = "#select_option_232") //changed data center because the asked one is not supported with selected GPU
-    private WebElement dataCenterSelect;
     @FindBy(css = "#select_value_label_95")
+    private WebElement dataCenter;
+    @FindBy(css = "#select_option_233") //changed data center because the asked one is not supported with selected GPU
+    private WebElement dataCenterSelect;
+    @FindBy(css = "#select_value_label_142")
     private WebElement commitedUsage;
-    @FindBy(css = "#select_option_134")
+    @FindBy(css = "#select_option_163")
     private WebElement commitedUsageSelect;
-    @FindBy(xpath = "//*[@id='mainForm']/div[2]/div/md-card/md-card-content/div/div[1]/form/div[19]/button")
+    @FindBy(xpath = "//*[@id='mainForm']/div[2]/div/md-card/md-card-content/div/div[1]/form/div[20]/button")
     private WebElement addToEstimate;
     @FindBy(xpath = "//iframe[@src='https://cloud.google.com/frame/products/calculator/index_d6a98ba38837346d20babc06ff2153b68c2990fa24322fe52c5f83ec3a78c6a0.frame']")
     private WebElement calculatorFrameOne;
@@ -79,7 +79,7 @@ public class HurtMePlentyPOM {
         return this;
     }
 
-    public HurtMePlentyPOM fillInMainData() throws InterruptedException {
+    public HurtMePlentyPOM fillInMainData() {
         switchToFrame(); //switch to iframes
         numberOfInstances.sendKeys("4");
         machineSeries.click();
@@ -99,7 +99,7 @@ public class HurtMePlentyPOM {
         return this;
     }
 
-    public HurtMePlentyPOM fillInStorageData() throws InterruptedException {
+    public HurtMePlentyPOM fillInStorageData() {
         JavascriptExecutor js = (JavascriptExecutor) driver;
 
         localSSD.click();
@@ -130,6 +130,7 @@ public class HurtMePlentyPOM {
     }
 
     public HurtMePlentyPOM switchToFrame() {
+        waitHandlerVisibility(10,calculatorFrameOne);
         driver.switchTo().frame(calculatorFrameOne);
         driver.switchTo().frame(calculatorFrameTwo);
         return this;
