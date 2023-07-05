@@ -6,12 +6,18 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.awt.*;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.io.IOException;
 import java.time.Duration;
+import java.util.ArrayList;
 
 public class HardCorePOM {
     private final WebDriver driver;
     private static final String HOMEPAGE_URL = "https://cloud.google.com/";
     private static final String CALC_NAME = "Google Cloud Platform Pricing Calculator";
+    private static final String MAIL_URL = "https://yopmail.com/email-generator";
 
 
     //region Selectors
@@ -59,6 +65,18 @@ public class HardCorePOM {
     private WebElement calculatorFrameOne;
     @FindBy(xpath = "//iframe[@id='myFrame']")
     private WebElement calculatorFrameTwo;
+    @FindBy(xpath = "//*[@id='Email Estimate']")
+    private WebElement emailEstimateButton;
+    @FindBy(xpath = "//*[@id='input_555']")
+    private WebElement estimateEmailTarget;
+    @FindBy(xpath = "//*[@id='cprnd']")
+    private WebElement copyMailButton;
+    @FindBy(xpath = "//*[@id='dialogContent_570']/form/md-dialog-actions/button[2]")
+    private WebElement sendEstimateButton;
+    @FindBy(xpath = "//span[normalize-space()='Check Inbox']")
+    private WebElement checkInboxButton;
+    @FindBy(xpath = "//*[@id='refresh']")
+    private WebElement refreshEmailButton;
 
     //endregion
     public HardCorePOM(WebDriver driver) {
@@ -80,7 +98,7 @@ public class HardCorePOM {
     }
 
     public HardCorePOM fillInMainData() {
-        switchToFrame(); //switch to iframes
+        switchToFrame();
         numberOfInstances.sendKeys("4");
         machineSeries.click();
         waitHandlerVisibility(1, machineSeriesOption);
@@ -139,7 +157,66 @@ public class HardCorePOM {
     public HardCorePOM submitForm() {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].click();",addToEstimate);
-        //addToEstimate.click();
         return this;
     }
+
+    public HardCorePOM openMailGeneratorInNewTab() {
+        driver.get(MAIL_URL);
+        return this;
+    }
+    public HardCorePOM openNewTab() {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("window.open();");
+        return this;
+    }
+
+    public String copyGeneratedEmail() throws IOException, UnsupportedFlavorException {
+        moveToElementJS(copyMailButton);
+        copyMailButton.click();
+        String generatedEmail = (String) Toolkit.getDefaultToolkit()
+                .getSystemClipboard().getData(DataFlavor.stringFlavor);
+        return generatedEmail;
+    }
+
+    public HardCorePOM sendEstimateToEmail(String emailAddress) throws InterruptedException {
+        switchToFrame();
+        emailEstimateButton.click();
+        waitHandlerVisibility(15,estimateEmailTarget);
+        estimateEmailTarget.click();
+        estimateEmailTarget.sendKeys(emailAddress);
+        moveToElementJS(sendEstimateButton);
+        waitHandlerVisibility(10,sendEstimateButton);
+        sendEstimateButton.click();
+        return this;
+    }
+
+    public HardCorePOM switchToTab1() {
+        ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
+        driver.switchTo().window(tabs.get(1));
+        return this;
+    }
+    public HardCorePOM switchToTab0() {
+        ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
+        driver.switchTo().window(tabs.get(0));
+        return this;
+    }
+    public HardCorePOM goToInbox() {
+        checkInboxButton.click();
+        waitHandlerClickable(10, refreshEmailButton);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        refreshEmailButton.click();
+        WebElement numberOfEmails = driver.findElement(By.xpath("//*[@id='nbmail']"));
+        if (numberOfEmails.getText() == "1 mail") {
+            return this;
+        } else {
+            return this;
+        }
+    }
+
+    public HardCorePOM moveToElementJS(WebElement element) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView();", element);
+        return this;
+    }
+
 }

@@ -10,7 +10,10 @@ import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pageobject_model.HurtMePlentyPOM;
+import pageobject_model.HardCorePOM;
+
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.io.IOException;
 
 public class HardCore {
     private WebDriver driver;
@@ -24,7 +27,7 @@ public class HardCore {
     }
 
     @Test
-    public void TaskThree() throws InterruptedException {
+    public void TaskFour() throws IOException, UnsupportedFlavorException, InterruptedException {
         //region Expected results
         String expectedPrice = "Total Estimated Cost: USD 5,406.21 per 1 month";
         String expectedSSD = "Local SSD: 2x375 GiB";
@@ -32,15 +35,13 @@ public class HardCore {
         String expectedInstance = "Instance type: n1-standard-1";
         String expectedRegion = "Region: Columbus";
         //endregion
-
-        HurtMePlentyPOM taskThree = new HurtMePlentyPOM(driver);
-        taskThree.openHomePage()
+        HardCorePOM taskFour = new HardCorePOM(driver);
+        taskFour.openHomePage()
                 .searchCalcAndNavigate()
                 .fillInMainData()
                 .fillInGPUdata()
                 .fillInStorageData()
                 .submitForm();
-
         //region Actual Result selectors
         WebElement actualPrice = driver.findElement(By.xpath("//*[@id='resultBlock']/md-card/md-card-content/div/div/div/div[1]/h2/b"));
         WebElement actualSSD = driver.findElement(By.xpath("//*[@id='compute']/md-list/md-list-item[8]/div[1]")); //*[@id="compute"]/md-list/md-list-item[8]/div[1]/text()
@@ -48,24 +49,40 @@ public class HardCore {
         WebElement actualInstance = driver.findElement(By.xpath("//*[@id='compute']/md-list/md-list-item[4]/div[1]"));
         WebElement actualRegion = driver.findElement(By.xpath("//*[@id='compute']/md-list/md-list-item[1]/div[1]"));
         //endregion
-
         Assert.assertEquals(actualPrice.getText(), expectedPrice, "Price is not correct");
         if (expectedInstance.contains(actualInstance.getText())) {
             Assert.assertTrue(true);
-        } else
+        } else {
             System.out.println("Instance is not correct");
+        }
         if (expectedSSD.contains(actualSSD.getText())) {
             Assert.assertTrue(true);
-        } else
+        } else {
             System.out.println("SSD is not correct");
+        }
         Assert.assertEquals(actualVM.getText(), expectedVM, "VM is not correct");
         Assert.assertEquals(actualRegion.getText(), expectedRegion, "Region is not correct");
-    }
 
+        taskFour.openNewTab()
+                .switchToTab1()
+                .openMailGeneratorInNewTab();
 
-    @AfterMethod(alwaysRun = true)
-    public void TearDown() {
-        driver.quit();
-        driver = null;
+        String emailAddress = taskFour.copyGeneratedEmail();
+        taskFour.switchToTab0()
+                .sendEstimateToEmail(emailAddress)
+                .switchToTab1()
+                .goToInbox();
+        WebElement actualEmailPrice = driver.findElement(By.xpath("//*[@id='mail']/div/div/table/tbody/tr[2]/td/h2"));
+        if (actualPrice.getText().contains(actualEmailPrice.getText())) {
+            Assert.assertTrue(true);
+        } else {
+            System.out.println("Price from email differs from the calculator price");
+               }
+
     }
-}
+            @AfterMethod(alwaysRun = true)
+            public void TearDown () {
+                driver.quit();
+                driver = null;
+            }
+        }
