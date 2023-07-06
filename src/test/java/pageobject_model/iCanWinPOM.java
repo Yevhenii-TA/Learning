@@ -43,19 +43,16 @@ public class iCanWinPOM {
 
     public iCanWinPOM openHomePage(){
         driver.get(HOMEPAGE_URL);
-        //return new PractTaskOnePOM(driver);
         return this;
     }
 
     public iCanWinPOM pasteMainText(){
         inputFieldHP.sendKeys(TEXT_NEW_PASTE);
-        //return new PractTaskOnePOM(driver);
         return this;
     }
 
     public iCanWinPOM pasteNameTitle(){
         nameFieldHP.sendKeys(TEXT_NAME_TITLE);
-        //return new PractTaskOnePOM(driver);
         return this;
     }
 
@@ -73,7 +70,6 @@ public class iCanWinPOM {
 
     public iCanWinPOM tapOnCreateBtn(){
         createBtn.click();
-        //return new PractTaskOnePOM(driver);
         return this;
     }
 }
